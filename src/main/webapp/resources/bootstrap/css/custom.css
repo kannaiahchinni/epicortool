@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+.navbar{
+	border-radius:none !important;
+}
+.navbar-inverse{
+	background:#fff;
+	border:#fff;
+	min-height:70px; border-bottom:1px solid #e4e4e4;
+}
+.navbar-default{
+	min-height:80px; padding:10px; border-radius:none !important;
+	border-color: #fff !important;
+    border: 0 !important;
+    background:#cc0000 none repeat scroll 0 0;
+    color:#fff;
+}
+.navbar li a,.navbar-nav li a {
+	color:#fff !important;
+}
+.navbar-brand{
+	color:#fff !important;
+}
+.icon-avaya {
+    display: inline;
+    fill: #fff;
+    height: 25px;
+    position: relative;
+    top: 8px;
+    width: 89px;
+}
+media (min-width:768px)
+.navbar {
+     border-radius: 0px;
+}
+.config{width:70%; height:80%;}
+.vcenter{
+	margin-top:10%;
+	margin-left:35%; right:15%; width:60%;
+}
+.navigationLinks a{
+	cursor:pointer; text-decoration:none;
+}
+.navigationLinks a:hover{
+	color:none;
+}
+
+html, body, p, h1,h2,h3,h4,h5, div,span, ul,li,table,td,th,tr,thead,a{
+	
+	 font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+input[type="checkbox"]{
+	font-size:15px; padding:2px;color:#489CDF;
+}
+.text li {
+	    padding: 5px;cursor: pointer;font-size: 16px;color: darkgreen; margin-top:10px;line-height:1.9em;
+}
+.active{
+	color:#E90C2D;
+}
+.navbar-right {
+   
+    margin-top: 6px;
+}

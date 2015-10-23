@@ -1,0 +1,17 @@
+<div class="col-md-12">
+<h1>Inbox</h1>
+<table class="table table-striped table-hover">
+				<tr>
+						<th>Assigned By</th><th>Ticket</th><th>Messgae</th>
+				<th>Date</th>
+				</tr>
+			<tr ng-repeat="box in inbox">
+				<td>{{box.fromEmail}}</td>
+				<td>{{box.ticketId}}</td>
+				<td>{{box.message}}</td>
+				<td>{{box.assign_date}}</td>
+				
+			</tr>		
+	</table>
+
+</div>

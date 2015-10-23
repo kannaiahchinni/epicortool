@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.avaya.plds.dao.PLDSPluginDAO">
+
+
+	<!-- <select id="getApplicationInfo" parameterType="java.lang.Integer"
+		resultType="AppInfo">
+		
+		select * from plds_plugin_app_data where application_id = #{appId}
+
+	</select> -->
+	
+	<select id="getInbox" parameterType="java.lang.String" resultType="Inbox">
+		
+		select id,ticket_id ticketId,to_email toEmail,from_email fromEmail,message, status,assign_date from inbox where to_email =#{email}
+		
+	</select>
+	
+	<insert id="setInbox" parameterType="inbox">
+	
+		insert into inbox(ticket_id,to_email,from_email, message,status) values(#{ticketId},#{toEmail},#{fromEmail},#{message},'false')
+		
+	</insert>
+	
+	<!-- <select id="getProductInfo" parameterType="java.lang.Integer" resultType="ProductInfo">
+		select * from plds_plugin_product_info where application_id = #{appId} and productVersion = #{version}	
+	</select>
+	
+	<select id="getFeatures" parameterType="java.lang.Integer" resultType="Features">
+			select * from plds_plugin_version_features where product_info_id = #{appId} and productVersion = #{version}
+	</select>
+	
+	<select id="getRules" parameterType="java.lang.Integer" resultType="Rules">
+			select * from plds_plugin_version_rule_id where version = #{version} and product_info_id=#{appId}
+	</select> -->
+	
+	<select id="login" parameterType="User" resultType="User">
+		SELECT USERNAME,EMAIL,PHONE,STATUS FROM USERS WHERE EMAIL = #{email} AND PASSWORD = #{password}
+		
+	</select>
+
+<!-- 	<select id="getApplicationList"  resultType="AppList">
+
+		select a.application_id appId,
+		a.application_name applicationName,
+		a.product_line_desc,
+		group_concat(b.productVersion order by b.productVersion) versions
+		from plds_plugin_product_info b
+		join plds_plugin_app_data a
+		on b.Application_id = a.Application_id
+    group by b.application_id
+
+	</select>
+		
+
+	<update id="updateAppData" parameterType="AppInfo">
+			UPDATE PLDS_PLUGIN_APP_DATA SET PRODUCT_LINE_CODE =#{product_line_code},MASTER_PRODUCT_LINE =#{master_product_line}, 
+			APPLICATION_NAME=#{application_name},
+			TYPE_CODE=#{type_code},  PLATFORM_TYPE =#{platform_type}, STRIP_DASH =#{strip_dash}, SID =#{Sid}, ALLOW_ANY =#{allow_any} ,
+			REQUIRED_APPS=#{required_apps},NOT_COMPATIBLE_APPS =#{not_compatible_apps}, WEBLMBYPASS=#{webLMByPass}, PLD_RELEASE =#{PLD_release}
+			WHERE APPLICATION_ID =#{application_id}
+			
+	</update>
+
+	<update id="updateProductInfo" parameterType="ProductInfo">
+		update plds_plugin_product_info set file_name=#{file_name},
+		rfaplatformtype_and_file_name =#{RFAPlatformType_and_file_name},
+		countedlicensetimeout=#{countedLicenseTimeout}, allocationlicenseduration=#{allocationLicenseDuration},
+		nodelocked=#{nodeLocked}, rfafirstapplication=#{RFAFirstApplication}, rfaerrorprefix=#{RFAErrorPrefix}
+		,name=#{name} ,displayname_isv_property1=#{DisplayName_ISV_property1}, defaultuniqueid=#{DefaultUniqueId},
+		productname=#{productName},productversion=#{productVersion}, featurevalidation=#{featureValidation}, addwarningmessages =#{addWarningMessages}, rfaapplication =#{rfaApplication},
+		allocationlicenseduration2 =#{allocationLicenseDuration2}, generatelar = #{generateLAR},ismultiapp =#{isMultiApp},
+		includeCertificates =#{includeCertificates} , productdefaultpassword=#{productDefaultPassword},
+		productdefaultalgorithm =#{productDefaultAlgorithm}, name2=#{Name2}, displayname3=#{DisplayName3}, pld_release=#{PLD_release}
+		where application_id =#{application_id} and productversion =#{productVersion}
+
+	</update>
+
+	<insert id="updateFeatures" parameterType="Features" statementType="CALLABLE">
+		 
+		
+		 
+		 
+ 		insert all
+		 <foreach collection="features" item="feature" index="index">
+		 
+		 into backup1 (product_info_id,productVersion, feature_type, defaultValue, defaultt,name4,displayname5,datatype,value,pld_release)
+		 values
+		 	(#{feature.Product_info_id},#{feature.productVersion},#{feature.Feature_type},#{feature.defaultValue},#{feature.defaultt},#{feature.Name4},
+		 	#{feature.DisplayName5}, #{feature.datatype},#{feature.Value},#{feature.PLD_release})
+		 </foreach>
+		 
+		 <foreach collection="features" item="feature" separator=";">
+		insert into plds_plugin_version_features (product_info_id,productVersion, feature_type, defaultValue, defaultt,name4,displayname5,datatype,value,pld_release)
+		 values
+			(
+			#{feature.Product_info_id, jdbcType=INTEGER,mode=IN},
+			#{feature.productVersion , jdbcType=INTEGER,mode=IN},
+			#{feature.Feature_type, jdbcType=VARCHAR,mode=IN},
+			#{feature.defaultValue ,jdbcType=INTEGER,mode=IN},
+			#{feature.defaultt , jdbcType=VARCHAR,mode=IN},#{feature.Name4,jdbcType=VARCHAR,mode=IN},
+		 	#{feature.DisplayName5,jdbcType=VARCHAR,mode=IN}, #{feature.dataType,jdbcType=VARCHAR,mode=IN},#{feature.Value ,jdbcType=VARCHAR,mode=IN},
+		 	#{feature.PLD_release,jdbcType=VARCHAR,mode=IN}
+			)
+		
+		
+				 </foreach>
+				
+		 
+	</insert>
+
+	<update id="updateRules" parameterType="Rules">
+				insert into plds_plugin_version_rule_id (product_info_id,version,rule,action_type,unitaction_id,
+				unitaction_type,feature_name,to_type,to_type_setting,messageCode,pld_release)
+				values(
+					#{rule.product_info_id, jdbcType=INTEGER, mode=IN},
+					#{rule.version, jdbcType=INTEGER, mode=IN},
+					#{rule.rule, jdbcType=VARCHAR, mode=IN},
+					#{rule.action_type, jdbcType=VARCHAR, mode=IN},
+					#{rule.unitAction_id, jdbcType=VARCHAR, mode=IN},
+					#{rule.unitAction_Type, jdbcType=VARCHAR, mode=IN},
+					#{rule.feature_Name, jdbcType=VARCHAR, mode=IN},
+					#{rule.to_type, jdbcType=VARCHAR, mode=IN},
+					#{rule.to_type_setting, jdbcType=VARCHAR, mode=IN},
+					#{rule.messageCode, jdbcType=VARCHAR, mode=IN},
+					#{rule.PLD_release, jdbcType=VARCHAR, mode=IN}
+				)
+	</update>
+
+	<insert id="saveAppData" parameterType="AppInfo" >
+			
+			insert into PLDS_PLUGIN_APP_DATA( PRODUCT_LINE_CODE,product_line_desc ,MASTER_PRODUCT_LINE,APPLICATION_NAME,TYPE_CODE,
+			PLATFORM_TYPE,STRIP_DASH,SID,ALLOW_ANY,REQUIRED_APPS,NOT_COMPATIBLE_APPS,WEBLMBYPASS,PLD_RELEASE)
+			values( 
+			 #{product_line_code}, #{product_line_desc},#{master_product_line}, 
+			 #{application_name},#{type_code}, #{platform_type}, #{strip_dash}, #{Sid},  #{allow_any} ,
+			 #{required_apps}, #{not_compatible_apps}, #{webLMByPass}, #{PLD_release}
+			)
+			select last_insert_id()
+			
+	</insert>
+
+
+
+	
+	<insert id="saveProductInfo1" parameterType="ProductInfo">
+		
+		insert into plds_plugin_product_info (file_name,rfaplatformtype_and_file_name,countedlicensetimeout,
+		allocationlicenseduration,nodelocked,rfafirstapplication,
+		rfaerrorprefix,name,displayname_isv_property1,defaultuniqueid,
+		productname,productVersion,featurevalidation,addwarningmessages,
+		rfaapplication,allocationlicenseduration2,generatelar,
+		ismultiapp,includeCertificates,productdefaultpassword,
+		productdefaultalgorithm,name2,displayname3,pld_release,application_id)
+		values(
+		#{file_name},#{RFAPlatformType_and_file_name},#{countedLicenseTimeout},
+		#{allocationLicenseDuration},#{nodeLocked},#{RFAFirstApplication},
+		#{RFAErrorPrefix},#{name},#{DisplayName_ISV_property1},#{DefaultUniqueId},
+		#{productName},#{productVersion},#{featureValidation},#{addWarningMessages},
+		#{rfaApplication},#{allocationLicenseDuration2},#{generateLAR},
+		#{isMultiApp},#{includeCertificates},#{productDefaultPassword},
+		#{productDefaultAlgorithm},#{Name2},#{DisplayName3},#{PLD_release},#{Application_id}
+		)
+	</insert>
+
+
+	<insert id="saveProductInfo" parameterType="ProductInfo">
+		<selectKey keyProperty="Application_id" resultType="java.lang.String" order="BEFORE">
+			select max(application_id) as appilcation_id from plds_plugin_app_data
+		</selectKey>
+		
+		insert into plds_plugin_product_info (file_name,rfaplatformtype_and_file_name,countedlicensetimeout,
+		allocationlicenseduration,nodelocked,rfafirstapplication,
+		rfaerrorprefix,name,displayname_isv_property1,defaultuniqueid,
+		productname,productVersion,featurevalidation,addwarningmessages,
+		rfaapplication,allocationlicenseduration2,generatelar,
+		ismultiapp,includeCertificates,productdefaultpassword,
+		productdefaultalgorithm,name2,displayname3,pld_release,application_id)
+		values(
+		#{file_name},#{RFAPlatformType_and_file_name},#{countedLicenseTimeout},
+		#{allocationLicenseDuration},#{nodeLocked},#{RFAFirstApplication},
+		#{RFAErrorPrefix},#{name},#{DisplayName_ISV_property1},#{DefaultUniqueId},
+		#{productName},#{productVersion},#{featureValidation},#{addWarningMessages},
+		#{rfaApplication},#{allocationLicenseDuration2},#{generateLAR},
+		#{isMultiApp},#{includeCertificates},#{productDefaultPassword},
+		#{productDefaultAlgorithm},#{Name2},#{DisplayName3},#{PLD_release},#{Application_id}
+		)
+	</insert>
+
+	<insert id="saveFeatures" parameterType="Features">
+	
+	<selectKey keyProperty="feature.Product_info_id" resultType="java.lang.String" order="BEFORE">
+			select max(application_id) as product_info_id from plds_plugin_app_data
+		</selectKey>
+	
+			insert into plds_plugin_version_features (product_info_id,productVersion, feature_type, defaultValue, defaultt,name4,displayname5,datatype,value,pld_release)
+		 values
+			(
+			#{feature.Product_info_id, jdbcType=INTEGER,mode=IN},
+			#{feature.productVersion , jdbcType=INTEGER,mode=IN},
+			#{feature.Feature_type, jdbcType=VARCHAR,mode=IN},
+			#{feature.defaultValue ,jdbcType=INTEGER,mode=IN},
+			#{feature.defaultt , jdbcType=VARCHAR,mode=IN},#{feature.Name4,jdbcType=VARCHAR,mode=IN},
+		 	#{feature.DisplayName5,jdbcType=VARCHAR,mode=IN}, #{feature.dataType,jdbcType=VARCHAR,mode=IN},#{feature.Value ,jdbcType=VARCHAR,mode=IN},
+		 	#{feature.PLD_release,jdbcType=VARCHAR,mode=IN}
+			)
+	</insert>
+
+	<insert id="saveRules" parameterType="Rules">
+			
+			<selectKey keyProperty="rule.product_info_id" resultType="java.lang.String" order="BEFORE">
+				select max(application_id) as product_info_id from plds_plugin_app_data
+			</selectKey>
+	
+	
+			insert into plds_plugin_version_rule_id (product_info_id,version,rule,action_type,unitaction_id,
+				unitaction_type,feature_name,to_type,to_type_setting,messageCode,pld_release)
+				values(
+					#{rule.product_info_id, jdbcType=INTEGER, mode=IN},
+					#{rule.version, jdbcType=INTEGER, mode=IN},
+					#{rule.rule, jdbcType=VARCHAR, mode=IN},
+					#{rule.action_type, jdbcType=VARCHAR, mode=IN},
+					#{rule.unitAction_id, jdbcType=VARCHAR, mode=IN},
+					#{rule.unitAction_Type, jdbcType=VARCHAR, mode=IN},
+					#{rule.feature_Name, jdbcType=VARCHAR, mode=IN},
+					#{rule.to_type, jdbcType=VARCHAR, mode=IN},
+					#{rule.to_type_setting, jdbcType=VARCHAR, mode=IN},
+					#{rule.messageCode, jdbcType=VARCHAR, mode=IN},
+					#{rule.PLD_release, jdbcType=VARCHAR, mode=IN}
+				)
+	</insert>
+
+	<delete id="deleteFeatures" parameterType="java.lang.String">
+		delete  from plds_plugin_version_features where product_info_id=#{appId} and productVersion = #{version}; 
+	</delete>
+	<delete id="deleteRules" parameterType="java.lang.String">
+	
+		delete from plds_plugin_version_rule_id where product_info_id=#{appId} and version = #{version}; 
+	</delete> -->
+	
+	
+	<insert id="requestLogin" parameterType="User">
+	
+		insert into users (username,email,password,phone,status) values(#{userName},#{email},#{password},#{phone},'false');
+	
+	</insert>
+
+</mapper>

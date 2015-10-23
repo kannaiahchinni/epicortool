@@ -1,0 +1,23 @@
+<div class="col-md-12" ng-show="status">
+<table class="table table-striped table-hover">
+					<tr>
+						<th>Value</th><th>PLDS release</th><th>Feature type</th>
+				<th>Display Name5</th><th>Name4</th><th>Default value</th><th>Defaultt</th><th>Data type</th>
+				</tr>
+			<tr ng-repeat="feature in configData.featuresList">
+				<!-- <td>{{feature.product_feature_Id}}</td> -->
+				<!-- <td>{{feature.productVersion}}</td> -->
+				<td>{{feature.value}}</td>
+				<td>{{feature.pld_release}}</td>
+				<td>{{feature.feature_type}}</td>
+				<!-- <td>{{feature.product_info_id}}</td> -->
+				<td>{{feature.displayName5}}</td>
+				<td>{{feature.name4}}</td>
+				<td>{{feature.defaultValue}}</td>
+				<td>{{feature.defaultt}}</td>
+				<td>{{feature.dataType}}</td>
+			</tr>		
+	</table>
+
+
+</div>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>PLDS Plugin Automation</title>
+<link rel="stylesheet" 	href="resources/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="resources/bootstrap/css/custom.css">
+<link href="resources/font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+</head>
+<body ng-app="PLDSPlugin">
+	<header id="header">
+	<nav class="navbar navbar-default">
+  <div class="container-fluid" ng-switch on="showMenu">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#/"><span> 
+      Epicor Notification Tool</span></a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+      
+      <ul class="nav navbar-nav navbar-right" ng-switch-default>
+        <li><a ng-href="#/login"><i class="glyphicon glyphicon-log-in"></i> Login</a></li>
+        <li><a ng-href="#/request">Request Login</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" ng-switch-when="true">
+        <li><a><i class="glyphicon glyphicon-user"> </i> {{userName}}</a></li>
+         <li><a ng-href="#/home/inbox"><i class="glyphicon glyphicon-log-out"></i> Inbox</a></li>
+          <li><a ng-href="#/home/assign"><i class="glyphicon glyphicon-log-out"></i> Assign Ticket</a></li>
+        <li><a ng-href="#/logout"><i class="glyphicon glyphicon-log-out"></i> Logout</a></li>
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+    
+  </div><!-- /.container-fluid -->
+</nav>	
+</header>
+	<section>
+		<div class="container">
+			<ui-view></ui-view>
+		</div>
+		
+	</section>
+	<footer>
+	</footer>
+<script type="text/javascript" src="resources/js/angular.min.js"></script>
+ <script src="resources/js/angular-ui-router.min.js"></script>
+ <script src="resources/js/angular-sanitize.js"></script>
+     <script src="resources/js/ui-bootstrap-tpls-0.12.1.js"></script>
+<script type="text/javascript" src="resources/directives/logindirective.js"></script>
+<script src="resources/angular/module.js" type="text/javascript" charset="utf-8"></script>
+<script src="resources/angular/config.js" type="text/javascript" charset="utf-8"></script>
+<script src="resources/services/PluginService.js" type="text/javascript" charset="utf-8"></script>
+<script src="resources/controllers/homeCtrl.js" type="text/javascript" charset="utf-8"></script>
+<script src="resources/controllers/modelController.js" type="text/javascript" charset="utf-8"></script>
+<script src="resources/controllers/logoutCtrl.js" type="text/javascript" charset="utf-8"></script>
+<script src="resources/controllers/requestCtrl.js" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

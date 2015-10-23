@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="PLDSPlugin:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="PLDSPlugin.war">
+      <element id="artifact" artifact-name="PLDSPlugin:war exploded" />
+    </root>
+  </artifact>
+</component>

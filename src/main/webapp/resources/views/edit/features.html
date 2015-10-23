@@ -1,0 +1,40 @@
+<div class="col-md-12" ng-show="status">
+	<div class="col-md-12 text-right"><a ng-click="editFeature('')">Add new Feature</a></div>
+	
+	<div class="col-md-12">
+	<table class="table table-striped">
+			<tr>
+				<th>Product Version</th><th>Value</th><th>PLDS release</th><th>Feature type</th>
+				<!-- <th>Product info id</th> --><th>Display Name5</th><th>Name4</th><th>Default value</th><th>Defaultt</th><th>Data type</th>
+				<th>Action</th>
+			</tr>
+			<tr ng-repeat="feature in configData.featuresList">
+				<!-- <td>{{feature.product_feature_Id}}</td> -->
+				<td>{{feature.productVersion}}</td>
+				<td>{{feature.value}}</td>
+				<td>{{feature.pld_release}}</td>
+				<td>{{feature.feature_type}}</td>
+				<!-- <td>{{feature.product_info_id}}</td> -->
+				<td>{{feature.displayName5}}</td>
+				<td>{{feature.name4}}</td>
+				<td>{{feature.defaultValue}}</td>
+				<td>{{feature.defaultt}}</td>
+				<td>{{feature.dataType}}</td>
+				<td><p>
+					<a ng-click="editFeature(feature)">
+					<i class="glyphicon glyphicon-pencil"></i></a> <a ng-click="deleteObject(feature,'1')"> <i class="glyphicon glyphicon-trash">
+					</i>
+					</a>
+					</p>
+				</td>
+		</tr>		
+	</table>
+</div>
+
+	<div class="col-md-12">
+			<!-- 	<div class="col-md-6 text-center"><button type="button" class="btn btn-info" ng-click="next('info')">Configuration</button></div>
+				<div class="col-md-6 text-center"><button type="button" class="btn btn-info" ng-click="next('rules')">Rules</button></div> -->
+			</div>
+
+
+</div>

@@ -1,0 +1,23 @@
+<div class="col-md-12" ng-show="status">
+	
+	<table class="table table-striped table-hover">
+		
+				<tr><!-- <th>RuleId</th> --><th>Version</th><th>Rule</th><th>Action Type</th><th>Unit Action Id</th><th>Unit Action Type</th>
+				<th>Feature Name</th><th>To Type</th><th>To Type Setting</th><th>Message Code</th><th>PLDS Release</th></tr>
+			<tr ng-repeat="rule in configData.rulesList">
+				<!-- <td>{{rule.product_info_id}}</td> -->
+				<td>{{rule.version}}
+				<td>{{rule.rule}}</td>
+				<td>{{rule.action_type}}</td>
+				<td>{{rule.unitAction_id}}</td>
+				<td>{{rule.unitAction_Type}}</td>
+				<td>{{rule.feature_Name}}</td>
+				<td>{{rule.to_type}}</td>
+				<td>{{rule.to_type_setting}}</td>
+				<td>{{rule.messageCode}}</td>
+				<td>{{rule.pld_release}}</td>
+			</tr>		
+	</table>
+
+
+</div>

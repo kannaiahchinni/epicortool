@@ -1,0 +1,30 @@
+<div class="col-md-12">
+	<h1>Assign Ticket </h1>
+	
+	 <form class="form-horizontal">
+        <div class="form-group">
+            <label for="inputEmail" class="control-label col-xs-2">Ticket Id</label>
+            <div class="col-xs-10">
+                <input type="text" class="form-control" id="ticketId" placeholder="TicketId" ng-model="inboxdata.ticketId">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail" class="control-label col-xs-2">Whom to Assign</label>
+            <div class="col-xs-10">
+                <input type="email" class="form-control" id="email" placeholder="email" ng-model="inboxdata.toEmail">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputEmail" class="control-label col-xs-2">Message</label>
+            <div class="col-xs-10">
+            <textarea rows="10" class="form-control" ng-model="inboxdata.message"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-xs-offset-2 col-xs-10">
+                <button type="submit" class="btn btn-primary" ng-click="assignTicket()">Assign Ticket</button>
+            </div>
+        </div>
+    </form>	
+
+</div>
